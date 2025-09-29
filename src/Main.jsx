@@ -10,6 +10,7 @@ export default function Main() {
 
     const [inputError, setInputError] = React.useState(false)
     const [ingredients, setIngredients] = React.useState([])
+    const [inputValue, setInputValue] = React.useState("")
     const [recipe, setRecipe] = React.useState("")
 
 
@@ -36,6 +37,8 @@ export default function Main() {
 
         const formData = new FormData(event.target)
         const newIngredient = formData.get("ingredient")
+        if (inputValue.trim() === "") return
+        setInputValue("")
         
         if(isAlphanumericWithSpace(newIngredient)) {
             setIngredients(prevIngredients => [...prevIngredients, newIngredient])
@@ -52,6 +55,8 @@ export default function Main() {
                     type="text"
                     placeholder="e.g. oregano"
                     aria-label="Add ingredient"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                     name="ingredient"
                 />
                 <button>Add ingredient</button>
