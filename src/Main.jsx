@@ -10,13 +10,27 @@ export default function Main() {
     }
 
     const [inputError, setInputError] = React.useState(false)
-    const [ingredients, setIngredients] = React.useState([])
+    const [ingredients, setIngredients] = React.useState(["egg", "powder", "honey", "sugar"])
     const [recipe, setRecipe] = React.useState("")
 
+
     async function getRecipe() {
-        const recipeMarkdown = await getRecipeFromMistral(ingredients)
-        setRecipe(recipeMarkdown)
-    }
+        try {
+          const res = await fetch("/api/get-recipe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ingredients }),
+          })
+      
+          if (!res.ok) throw new Error(`Server error: ${res.status}`)
+      
+          const data = await res.json()
+          setRecipe(data.recipe)
+        } catch (err) {
+          console.error("Error fetching recipe:", err)
+          setRecipe("Sorry, I couldn't fetch a recipe.")
+        }
+      }
 
     function addIngredient(event) {
         event.preventDefault()
