@@ -4,6 +4,12 @@ import ClaudeRecipe from "/src/components/ClaudeRecipe"
 import { getRecipeFromMistral } from "/src/ai"
 
 export default function Main() {
+    function isAlphanumericWithSpace(str) {
+        const regex = /^[a-zA-Z0-9 ]+$/;
+        return regex.test(str);
+    }
+
+    const [inputError, setInputError] = React.useState(false)
     const [ingredients, setIngredients] = React.useState([])
     const [recipe, setRecipe] = React.useState("")
 
@@ -12,14 +18,23 @@ export default function Main() {
         setRecipe(recipeMarkdown)
     }
 
-    function addIngredient(formData) {
+    function addIngredient(event) {
+        event.preventDefault()
+
+        const formData = new FormData(event.target)
         const newIngredient = formData.get("ingredient")
-        setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+        
+        if(isAlphanumericWithSpace(newIngredient)) {
+            setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+            setInputError(prev => false)
+        } else {
+            setInputError(prev => true)
+        }
     }
 
     return (
         <main>
-            <form action={addIngredient} className="add-ingredient-form">
+            <form onSubmit={addIngredient} className="add-ingredient-form">
                 <input
                     type="text"
                     placeholder="e.g. oregano"
@@ -28,6 +43,8 @@ export default function Main() {
                 />
                 <button>Add ingredient</button>
             </form>
+
+            {inputError && <p className="input-error">Please enter meaningful stuff.</p>}
 
             {ingredients.length > 0 &&
                 <IngredientsList
