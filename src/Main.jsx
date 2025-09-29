@@ -1,7 +1,6 @@
 import React from "react"
 import IngredientsList from "/src/components/IngredientsList"
 import ClaudeRecipe from "/src/components/ClaudeRecipe"
-import { getRecipeFromMistral } from "/src/ai"
 
 export default function Main() {
     function isAlphanumericWithSpace(str) {
