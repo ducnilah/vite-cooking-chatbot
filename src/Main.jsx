@@ -9,7 +9,7 @@ export default function Main() {
     }
 
     const [inputError, setInputError] = React.useState(false)
-    const [ingredients, setIngredients] = React.useState(["egg", "powder", "honey", "sugar"])
+    const [ingredients, setIngredients] = React.useState([])
     const [recipe, setRecipe] = React.useState("")
 
 
