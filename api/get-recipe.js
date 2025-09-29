@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: `I have ${ingredientsString}. Please give me a recipe!` }
       ],
-      max_tokens: 512,
+      max_tokens: 1024,
     })
     res.status(200).json({ recipe: response.choices[0].message.content })
   } catch (err) {
