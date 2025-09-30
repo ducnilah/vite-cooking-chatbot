@@ -16,16 +16,17 @@ export default function Main() {
 
     async function getRecipe() {
         try {
-          const res = await fetch("/api/get-recipe", {
+            setRecipe(data.recipe)
+            
+            const res = await fetch("/api/get-recipe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ingredients }),
           })
       
           if (!res.ok) throw new Error(`Server error: ${res.status}`)
-      
+          setRecipe("Please wait, Chef Claude is loading ...")
           const data = await res.json()
-          setRecipe(data.recipe)
         } catch (err) {
           console.error("Error fetching recipe:", err)
           setRecipe("Sorry, I couldn't fetch a recipe.")
