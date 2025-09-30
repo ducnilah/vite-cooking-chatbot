@@ -16,7 +16,7 @@ export default function Main() {
 
     async function getRecipe() {
         try {
-            setRecipe("Please wait, Chef Claude is")
+            setRecipe("Please wait, Chef Claude is loading ...")
           const res = await fetch("/api/get-recipe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
