@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const { ingredients } = req.body
     const ingredientsString = ingredients.join(", ")
     const response = await hf.chatCompletion({
-      model: "reedmayhew/claude-3.7-sonnet-reasoning-gemma3-12B",
+      model: "mistralai/Mistral-7B-Instruct-v0.2",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: `I have ${ingredientsString}. Please give me a recipe!` }
